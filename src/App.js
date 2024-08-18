@@ -22,7 +22,6 @@ const App = () => {
   }
 
   const handleSumNumbers = () => {
-
     if(firstNumber === '0'){
         setFirstNumber(String(currentNumber));
         setCurrentNumber('0')
@@ -32,11 +31,9 @@ const App = () => {
       setCurrentNumber(String(sum))
       setOperation('')
     }
-
   }
 
   const handleMinusNumbers = () => {
-
     if(firstNumber === '0'){
         setFirstNumber(String(currentNumber));
         setCurrentNumber('0')
@@ -46,11 +43,40 @@ const App = () => {
       setCurrentNumber(String(sum))
       setOperation('')
     }
+  }
+  const handleMultiuplyNumbers = () => {
+      if(firstNumber === '0'){
+          setFirstNumber(String(currentNumber));
+          setCurrentNumber('0')
+          setOperation('x')
+      }else {
+        const result = Number(firstNumber) * Number(currentNumber);
+        setCurrentNumber(String(result))
+        setOperation('')
+      }
+  }
 
+
+  const handleDivideNumbers = () => {
+    if(firstNumber === '0'){
+        setFirstNumber(String(currentNumber));
+        setCurrentNumber('0')
+        setOperation('/')
+    }else {
+      const result = Number(firstNumber) / Number(currentNumber);
+      setCurrentNumber(String(result))
+      setOperation('')
+    }
+  }
+
+  const handleDotClick = () => {
+    // Adiciona o ponto apenas se não houver um ponto no número atual
+    if (!currentNumber.includes('.')) {
+      setCurrentNumber(currentNumber + '.');
+    }
   }
 
   const handleEquals = () => {
-
     if(firstNumber !== '0' && operation !== '' && currentNumber !== '0'){
         switch(operation){
           case '+':
@@ -59,10 +85,18 @@ const App = () => {
           case '-':
             handleMinusNumbers();
             break;
-          default: 
+          case 'x':
+            handleMultiuplyNumbers();
+            break;
+          case '/':
+            handleDivideNumbers();
+            break;
+          default:
             break;
         }
     }
+
+  
 
   }
 
@@ -71,10 +105,10 @@ const App = () => {
       <Content>
         <Input value={currentNumber}/>
         <Row>
-          <Button label="x"/>
-          <Button label="/"/>
+          <Button label="x" onClick={handleMultiuplyNumbers}/>
+          <Button label="/" onClick={handleDivideNumbers }/>
           <Button label="c" onClick={handleOnClear}/>
-          <Button label="."/>
+          <Button label="." onClick={handleDotClick} />
         </Row>
         <Row>
           <Button label="7" onClick={() => handleAddNumber('7')}/>
@@ -93,6 +127,9 @@ const App = () => {
           <Button label="2" onClick={() => handleAddNumber('2')}/>
           <Button label="3" onClick={() => handleAddNumber('3')}/>
           <Button label="=" onClick={handleEquals}/>
+        </Row>
+        <Row>
+          <Button label="0" onClick={() => handleAddNumber('0')}/>
         </Row>
       </Content>
     </Container>
